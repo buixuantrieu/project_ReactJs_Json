@@ -30,6 +30,12 @@ import {
   changePasswordRequest,
   changePasswordSuccess,
   changePasswordFailure,
+  getUserRequest,
+  getUserSuccess,
+  getUserFailure,
+  updateStatusUserRequest,
+  updateStatusUserSuccess,
+  updateStatusUserFailure,
 } from "../slicers/auth.slice";
 
 //Register SagaService
@@ -58,7 +64,6 @@ function* activeSaga(action) {
   try {
     const { uid } = action.payload;
     const result = yield axios.get(`http://localhost:3500/users?uid=${uid}`);
-    console.log(uid);
     yield axios.patch(`http://localhost:3500/users/${result.data[0].id}`, {
       status: "active",
     });
@@ -74,12 +79,12 @@ function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post("http://localhost:3500/login", data);
-    yield localStorage.setItem("accessToken", result.data.accessToken);
     if (result.data.user.status === "UnActivated") {
       notification.error({ message: "Account is not activated!" });
-    } else if (result.data.user.status === "Lock") {
+    } else if (result.data.user.status === "lock") {
       notification.error({ message: "Account is locked!" });
     } else {
+      yield localStorage.setItem("accessToken", result.data.accessToken);
       callback(result.data.user.role);
       yield put(loginSuccess({ data: result.data.user }));
       notification.success({ message: "Login Success" });
@@ -189,6 +194,30 @@ function* changePasswordSaga(action) {
     yield put(changePasswordFailure({ error: "Lỗi" }));
   }
 }
+function* getUserSaga(action) {
+  try {
+    const result = yield axios.get("http://localhost:3500/users", {
+      params: {
+        role: "user",
+      },
+    });
+    yield put(getUserSuccess({ data: result.data }));
+  } catch (e) {
+    yield put(getUserFailure({ error: "Lỗi..." }));
+  }
+}
+function* updateStatusUserSaga(action) {
+  try {
+    const { data } = action.payload;
+    yield axios.patch(`http://localhost:3500/users/${data.id}`, {
+      status: data.status,
+    });
+    yield put(updateStatusUserSuccess());
+    yield put(getUserRequest());
+  } catch (e) {
+    yield put(updateStatusUserFailure({ error: "Lỗi..." }));
+  }
+}
 
 export default function* authSaga() {
   yield takeEvery(registerRequest, registerSaga);
@@ -200,4 +229,6 @@ export default function* authSaga() {
   yield takeEvery(changeAvatarRequest, changeAvatarSaga);
   yield takeEvery(updateUserInfoRequest, updateUserInfoSaga);
   yield takeEvery(changePasswordRequest, changePasswordSaga);
+  yield takeEvery(getUserRequest, getUserSaga);
+  yield takeEvery(updateStatusUserRequest, updateStatusUserSaga);
 }

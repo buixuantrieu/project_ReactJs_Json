@@ -34,6 +34,11 @@ const initialState = {
     loading: false,
     error: null,
   },
+  userList: {
+    data: [],
+    loading: false,
+    error: null,
+  },
 };
 
 export const authSlice = createSlice({
@@ -187,6 +192,36 @@ export const authSlice = createSlice({
       state.changePasswordData.loading = false;
       state.changePasswordData.error = error;
     },
+    // getUser
+    getUserRequest: (state, action) => {
+      state.userList.loading = true;
+      state.userList.error = null;
+    },
+    getUserSuccess: (state, action) => {
+      const { data } = action.payload;
+      state.userList.data = data;
+      state.userList.loading = false;
+      state.userList.error = null;
+    },
+    getUserFailure: (state, action) => {
+      const { error } = action.payload;
+      state.userList.loading = false;
+      state.userList.error = error;
+    },
+    // updateStatusUser
+    updateStatusUserRequest: (state, action) => {
+      state.userList.loading = true;
+      state.userList.error = null;
+    },
+    updateStatusUserSuccess: (state, action) => {
+      state.userList.loading = false;
+      state.userList.error = null;
+    },
+    updateStatusUserFailure: (state, action) => {
+      const { error } = action.payload;
+      state.userList.loading = false;
+      state.userList.error = error;
+    },
   },
 });
 
@@ -219,6 +254,12 @@ export const {
   changePasswordRequest,
   changePasswordSuccess,
   changePasswordFailure,
+  getUserRequest,
+  getUserSuccess,
+  getUserFailure,
+  updateStatusUserRequest,
+  updateStatusUserSuccess,
+  updateStatusUserFailure,
 } = authSlice.actions;
 
 export default authSlice.reducer;

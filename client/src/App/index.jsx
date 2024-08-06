@@ -14,6 +14,7 @@ import TypeManagement from "../pages/admin/Type";
 import OrderManagement from "../pages/admin/Order";
 import Dashboard from "../pages/admin";
 import ReviewManagement from "../pages/admin/Review";
+import UserManagement from "../pages/admin/User";
 
 import HomePage from "../pages/user/HomePage";
 import ProductList from "../pages/user/ProductList";
@@ -57,6 +58,7 @@ function App() {
         <Route path={ROUTES.ADMIN.ORDER_MANAGE} element={<OrderManagement />} />
         <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
         <Route path={ROUTES.ADMIN.COMMENT_MANAGE} element={<ReviewManagement />} />
+        <Route path={ROUTES.ADMIN.USER_MANAGE} element={<UserManagement />} />
       </Route>
       <Route element={<UserLayout />}>
         <Route path={ROUTES.USER.HOME} element={<HomePage />} />
