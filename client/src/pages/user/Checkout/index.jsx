@@ -178,7 +178,7 @@ function Checkout() {
                             name="paymentMethod"
                             rules={[{ required: true, message: "Required!" }]}
                           >
-                            <Radio.Group>
+                            <Radio.Group defaultValue={"cod"}>
                               <Space direction="vertical">
                                 <Radio value="cod">COD</Radio>
                                 <Radio value="atm">ATM</Radio>

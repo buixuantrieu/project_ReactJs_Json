@@ -7,7 +7,13 @@ const initialState = {
     loading: false,
     error: null,
   },
+
   orderProductData: {
+    loading: false,
+    error: null,
+  },
+  orderRevenue: {
+    data: [],
     loading: false,
     error: null,
   },
@@ -72,6 +78,21 @@ export const orderSlice = createSlice({
       state.orderProductData.error = error;
       state.orderProductData.loading = false;
     },
+    // revenueOrderProduct
+    orderRevenueRequest: (state) => {
+      state.orderRevenue.loading = true;
+      state.orderRevenue.error = null;
+    },
+    orderRevenueSuccess: (state, action) => {
+      const { data } = action.payload;
+      state.orderRevenue.data = data;
+      state.orderRevenue.loading = false;
+    },
+    orderRevenueFail: (state, action) => {
+      const { error } = action.payload;
+      state.orderRevenue.error = error;
+      state.orderRevenue.loading = false;
+    },
   },
 });
 
@@ -88,6 +109,9 @@ export const {
   deleteOrderProductRequest,
   deleteOrderProductSuccess,
   deleteOrderProductFail,
+  orderRevenueRequest,
+  orderRevenueSuccess,
+  orderRevenueFail,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

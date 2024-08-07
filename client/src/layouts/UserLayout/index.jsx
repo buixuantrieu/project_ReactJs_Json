@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 import * as S from "./styles";
 
@@ -11,6 +12,7 @@ function UserLayout() {
       <S.UserLayoutContent>
         <Outlet />
       </S.UserLayoutContent>
+      <Footer />
     </S.UserLayoutWrapper>
   );
 }

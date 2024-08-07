@@ -1,61 +1,80 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-export const ProductTitleContainer = styled.div`
+export const Container = styled.div`
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+`;
+
+export const HeroSection = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background-color: #f1f1f1;
+`;
+
+export const HeroText = styled.div`
+  max-width: 50%;
+  h1 {
+    font-size: 48px;
+    color: #333;
+  }
+  p {
+    font-size: 18px;
+    color: #555;
+  }
+`;
+
+export const ShopButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  &:hover {
+    background-color: #555;
+  }
+`;
+
+export const HeroImage = styled.img`
+  width: 40%;
+  border-radius: 10px;
+`;
+
+export const CollectionSection = styled.section`
+  padding: 50px 0;
   text-align: center;
 `;
-export const ProductTitle = styled.div`
-  font-weight: 500;
-  font-size: 24px;
-  color: #dba628;
+
+export const SectionTitle = styled.h2`
+  font-size: 36px;
+  color: #333;
+  margin-bottom: 40px;
 `;
-export const ProductDes = styled.img`
-  width: 100px;
-`;
-export const ProductSnapWrapper = styled.div`
-  padding: 40px 120px;
-`;
-export const ProductSnapContainer = styled.div`
+
+export const CollectionList = styled.div`
   display: flex;
-  gap: 50px;
+  justify-content: space-around;
+`;
+
+export const CollectionItem = styled.div`
+  width: 30%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const CollectionImage = styled.img`
   width: 100%;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  scroll-snap-stop: always;
+  border-radius: 10px;
 `;
-export const ProductSnapItem = styled.div`
-  scroll-snap-align: start;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  gap: 12px;
-  font-weight: 500;
-  font-size: 17px;
-  padding: 5px;
-  ${(prop) =>
-    prop.$active &&
-    css`
-      color: #fa8c16;
-    `}
+
+export const CollectionName = styled.h3`
+  margin-top: 20px;
+  font-size: 24px;
+  color: #333;
 `;
-export const ProductSnapImage = styled.div`
-  border: 1px solid #dba628;
-  width: 150px;
-  height: 150px;
-  background-position: center;
-  background-size: 100%;
-  transition: all 0.3s linear;
-  cursor: pointer;
-  &:hover {
-    background-size: 120%;
-  }
-  ${(prop) =>
-    prop.$active &&
-    css`
-      border: 1px solid #fa8c16;
-      background-size: 120%;
-      transform: translate(5px, -5px);
-      box-shadow: -5px 5px 10px #fde6af;
-    `}
-`;
-export const ProductSnapTypeName = styled.div``;

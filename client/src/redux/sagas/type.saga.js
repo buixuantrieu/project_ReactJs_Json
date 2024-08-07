@@ -40,6 +40,7 @@ function* getTypeSaga(action) {
       params: {
         isDelete: false,
         ...(keywords && { q: keywords }),
+        _embed: "products",
       },
     });
     yield put(getTypeSuccess({ data: result.data }));

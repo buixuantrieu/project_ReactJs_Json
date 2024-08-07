@@ -1,7 +1,7 @@
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 import { notification } from "antd";
-
+import dayjs from "dayjs";
 import {
   getOrderListRequest,
   getOrderListSuccess,
@@ -15,6 +15,9 @@ import {
   deleteOrderProductRequest,
   deleteOrderProductSuccess,
   deleteOrderProductFail,
+  orderRevenueRequest,
+  orderRevenueSuccess,
+  orderRevenueFail,
 } from "../slicers/order.slice";
 import { deleteCartRequest } from "../slicers/cart.slice";
 
@@ -56,6 +59,18 @@ function* deleteOrderListSaga(action) {
     yield put(deleteOrderProductFail({ error: "Lỗi..." }));
   }
 }
+function* orderRevenueSaga(action) {
+  try {
+    const result = yield axios.get("http://localhost:3500/orders", {
+      params: {
+        status: "Success",
+      },
+    });
+    yield put(orderRevenueSuccess({ data: result.data }));
+  } catch (e) {
+    yield put(deleteOrderProductFail({ error: "Lỗi..." }));
+  }
+}
 
 function* orderProductSaga(action) {
   try {
@@ -73,8 +88,8 @@ function* orderProductSaga(action) {
       });
       yield put(deleteCartRequest({ id: cartList[i].id, callback: () => null }));
     }
-    yield callback();
     yield put(orderProductSuccess());
+    yield callback();
   } catch (e) {
     yield put(orderProductFail({ error: "Lỗi..." }));
   }
@@ -85,4 +100,5 @@ export default function* categorySaga() {
   yield takeEvery(orderProductRequest, orderProductSaga);
   yield takeEvery(updateOrderProductRequest, updateOrderListSaga);
   yield takeEvery(deleteOrderProductRequest, deleteOrderListSaga);
+  yield takeEvery(orderRevenueRequest, orderRevenueSaga);
 }
